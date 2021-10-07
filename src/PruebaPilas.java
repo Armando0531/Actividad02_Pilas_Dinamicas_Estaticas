@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 class Pelicula{
 	private String titulo;
@@ -30,17 +31,84 @@ class Pelicula{
 
 interface RentaPeliculas{
 	boolean insetarPeliculaRentada(Pelicula peli);
-	public boolean eliminarPeliculaRectada();
+	public boolean eliminarPeliculaRentada();
 	public boolean verificarPilaLlena();
 	public boolean verficarPilaVacia();
 	public void mostrarCima();
 }
 
+class ImplementacionPilaEstatica implements RentaPeliculas{
+	private Pelicula pilaPelis[];
+	private int cima;
+	public ImplementacionPilaEstatica() {
+		pilaPelis=new Pelicula[3];
+		cima=-1;
+	}
+	@Override
+	public boolean insetarPeliculaRentada(Pelicula peli) {
+		if(verificarPilaLlena()) {
+			return false;
+		}else {
+			cima++;
+			pilaPelis[cima]=peli;
+			return true;
+		}
+		
+	}
+	@Override
+	public boolean eliminarPeliculaRentada() {
+		if(verficarPilaVacia()==false) {
+			pilaPelis[cima]=null;
+			cima--;
+			return true;
+		}else {
+			return false;
+		}
+
+	}
+	@Override
+	public boolean verificarPilaLlena() {
+		if(cima==pilaPelis.length-1) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	@Override
+	public boolean verficarPilaVacia() {
+		if(cima==-1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	@Override
+	public void mostrarCima() {
+		if(verficarPilaVacia()==false) {
+			System.out.println(pilaPelis[cima]);
+		}else {
+			System.out.println("La pila esta vacia");
+		}
+		
+	}
+	
+
+}
+
 public class PruebaPilas {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Scanner entrada=new Scanner(System.in);
+		ImplementacionPilaEstatica pe =new ImplementacionPilaEstatica();
+		Pelicula[] pila=new Pelicula[5];
+		
+		pila[0]=new Pelicula("Las cronicas de Spiderwick","Fantasia");
+		
+		pe.insetarPeliculaRentada(pila[0]);
+		pe.mostrarCima();
+		pe.eliminarPeliculaRentada();
+		pe.mostrarCima();
 	}
 
 }
