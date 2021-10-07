@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Stack;
 
 class Pelicula{
 	private String titulo;
@@ -96,14 +97,53 @@ class ImplementacionPilaEstatica implements RentaPeliculas{
 
 }
 
+class ImplementacionPilaDinamica implements RentaPeliculas{
+	private Stack<Pelicula> pilaPelis=new Stack<Pelicula>();
+	private int cima;
+	public ImplementacionPilaDinamica() {
+		this.cima =-1;
+	}
+	@Override
+	public boolean insetarPeliculaRentada(Pelicula peli) {
+			pilaPelis.push(peli);
+			cima++;
+			return true;
+		}
+	@Override
+	public boolean eliminarPeliculaRentada() {
+		if(cima>=0) {
+		pilaPelis.pop();
+		cima--;
+		return true;
+		}else {
+			return false;
+		}
+	}
+	@Override
+	public boolean verificarPilaLlena() {
+		return false;
+	}
+	@Override
+	public boolean verficarPilaVacia() {
+		return pilaPelis.isEmpty();
+	}
+	@Override
+	public void mostrarCima() {
+		System.out.println(pilaPelis.peek());
+	}
+	
+}
+
 public class PruebaPilas {
 
 	public static void main(String[] args) {
 		Scanner entrada=new Scanner(System.in);
 		ImplementacionPilaEstatica pe =new ImplementacionPilaEstatica();
+		ImplementacionPilaDinamica pd =new ImplementacionPilaDinamica();
 		Pelicula[] pila=new Pelicula[5];
 		
 		pila[0]=new Pelicula("Las cronicas de Spiderwick","Fantasia");
+		pila[1]=new Pelicula("Terminator","Ciencia Ficcion");
 		
 		pe.insetarPeliculaRentada(pila[0]);
 		pe.mostrarCima();
