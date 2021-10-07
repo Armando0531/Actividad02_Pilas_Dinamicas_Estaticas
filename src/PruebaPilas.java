@@ -138,17 +138,91 @@ public class PruebaPilas {
 
 	public static void main(String[] args) {
 		Scanner entrada=new Scanner(System.in);
-		ImplementacionPilaEstatica pe =new ImplementacionPilaEstatica();
-		ImplementacionPilaDinamica pd =new ImplementacionPilaDinamica();
+		
+		byte opcionPelicula=0;
+		int pocipeli=0;
 		Pelicula[] pila=new Pelicula[5];
+		String op;
 		
-		pila[0]=new Pelicula("Las cronicas de Spiderwick","Fantasia");
-		pila[1]=new Pelicula("Terminator","Ciencia Ficcion");
+		ImplementacionPilaEstatica pilaE=new ImplementacionPilaEstatica();
+		ImplementacionPilaDinamica pilaDi=new ImplementacionPilaDinamica();
 		
-		pe.insetarPeliculaRentada(pila[0]);
-		pe.mostrarCima();
-		pe.eliminarPeliculaRentada();
-		pe.mostrarCima();
+		do {
+		System.out.println("Elige una opcion");
+		System.out.println("1)Cargar BD peliculas");
+		System.out.println("2)Rentar pelicula");
+		System.out.println("3)Devolver pelicula");
+		System.out.println("4)Cantidad de peliculas disponibles para rentar");
+		System.out.println("5)Salir");
+		op=entrada.nextLine();
+		switch (op) {
+		case "1":
+				pila[0]=new Pelicula("Las cronicas de Spiderwick ","Fantasia");
+				pila[1]=new Pelicula("Harry Potter","Fantasia");
+				pila[2]=new Pelicula("Terminator","Ciencia Ficcion");
+				pila[3]=new Pelicula("Venom","Ciencia ficcion");
+				pila[4]=new Pelicula("Reminiscencia","Ciencia ficcion");
+				
+				System.out.println("Se cargo la BD de peliculas");
+			break;
+		case "2":
+			System.out.println("En donde quieres guardar \nA)PILA ESTATICA \nB)PILA DINAMICA");
+			String op2=entrada.nextLine();
+			if(pila[0]!=null) {
+				if(op2.equalsIgnoreCase("A")) {
+					System.out.println("Que pelicula deseas rentar");
+					for(int i=0;i<pila.length;i++) {
+						System.out.println((i+1)+")"+pila[i]);
+					}
+					op2=entrada.nextLine();
+					try {
+						System.out.println(pilaE.insetarPeliculaRentada(pila[Integer.parseInt(op2)-1])? "Listo se a rentado la pelicula":"Oh vaya ya no puedes rentar mas peliculas");
+						pocipeli++;
+					}catch(NumberFormatException e) {
+						System.out.println("no ingresaste un numero");
+					}
+				}else if(op2.equalsIgnoreCase("B")) {
+					for(int i=0;i<pila.length;i++) {
+						System.out.println((i+1)+")"+pila[i]);
+					}
+					op2=entrada.nextLine();
+					try {
+						System.out.println(pilaDi.insetarPeliculaRentada(pila[Integer.parseInt(op2)-1])? "Listo se a rentado la pelicula":"Oh vaya ya no puedes rentar mas peliculas");
+						pocipeli++;
+					}catch(NumberFormatException e) {
+						System.out.println("Oh vaya no ingresaste un numero");
+					}
+				}//B
+			}else {
+				System.out.println("No se an cargado pelicuas");
+			}
+			break;
+		case "3":
+			System.out.println("En donde quieres eliminar \nA)PILA ESTATICA  \nB)PILA DINAMICA");
+			String opOp3=entrada.nextLine();
+			if(pila[0]!=null) {
+				if(opOp3.equalsIgnoreCase("A")) {
+					System.out.println(pilaE.eliminarPeliculaRentada()? "Listo se a devuelto la pelicula":"Oh vaya ya no puedes devolver mas peliculas");
+					pocipeli--;
+				}else if(opOp3.equalsIgnoreCase("B")) {
+					System.out.println(pilaDi.eliminarPeliculaRentada()? "Listo se a devuelto la pelicula":"Oh vaya ya no puedes devolver mas peliculas");
+					pocipeli--;
+				}
+			}else {
+				System.out.println("No se han cargado peliculas");
+			}
+			break;
+		case "4":
+				System.out.println("La catidad de peliculas disponibles para rentar es de:"+(5-pocipeli));
+	break;
+		case "5":
+	
+	break;
+		default:
+			System.out.println("Error la opcion que seleccionaste no existe.");
+			break;
+		}//switch
+		}while(!op.equals("5"));
 	}
 
 }
